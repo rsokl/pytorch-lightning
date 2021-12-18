@@ -76,13 +76,13 @@ ENV \
 COPY ./requirements/extra.txt requirements-extra.txt
 COPY ./requirements/test.txt requirements-test.txt
 COPY ./requirements/adjust_versions.py adjust_versions.py
-COPY ./.github/prune-packages.py prune_packages.py
+COPY ./.actions/asssistant.py assistant.py
 
 RUN \
     pip list | grep torch && \
     python -c "import torch; print(torch.__version__)" && \
     python adjust_versions.py requirements-extra.txt && \
-    python prune_packages.py requirements-extra.txt "fairscale" "horovod" && \
+    python assistant.py requirements_prune_pkgsrequirements-extra.txt --packages "fairscale" "horovod" && \
     # Install remaining requirements
     pip install -r requirements-extra.txt --no-cache-dir && \
     pip install -r requirements-test.txt --no-cache-dir && \
