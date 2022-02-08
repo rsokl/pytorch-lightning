@@ -2427,7 +2427,7 @@ class Trainer(
 
     @property
     def global_step(self) -> int:
-        return self.fit_loop.global_step
+        return self.fit_loop.epoch_loop.global_step
 
     @property
     def current_epoch(self) -> int:

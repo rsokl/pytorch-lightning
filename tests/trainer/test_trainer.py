@@ -332,7 +332,8 @@ def test_model_checkpoint_options(tmpdir, save_top_k, save_last, expected_files)
     # emulate callback's calls during the training
     for i, loss in enumerate(losses):
         trainer.fit_loop.epoch_progress.current.completed = i  # sets `trainer.current_epoch`
-        trainer.fit_loop.global_step = i
+        # sets `trainer.global_step`
+        trainer.fit_loop.epoch_loop.batch_loop.optimizer_loop.optim_progress.optimizer.step.total.completed = i
         trainer.callback_metrics.update({"checkpoint_on": torch.tensor(loss)})
         checkpoint_callback.on_validation_end(trainer, trainer.lightning_module)
 
@@ -1368,6 +1369,7 @@ def test_log_every_n_steps(log_metrics_mock, tmpdir, train_batches, max_steps, l
         max_steps=max_steps,
     )
     trainer.fit(model)
+    # FIXME
     expected_calls = [call(metrics=ANY, step=s) for s in range(log_interval - 1, max_steps, log_interval)]
     log_metrics_mock.assert_has_calls(expected_calls)
 

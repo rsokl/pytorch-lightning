@@ -312,7 +312,8 @@ def test_min_steps_override_early_stopping_functionality(tmpdir, step_freeze: in
 
         def validation_epoch_end(self, outputs):
             _mean = np.mean([x["test_val_loss"] for x in outputs])
-            if self.trainer.global_step <= self._step_freeze:
+            # -1 because the global step has been increased already in the training step
+            if self.trainer.global_step - 1 <= self._step_freeze:
                 self._count_decrease += 1
                 self._loss_value -= self._eps
             self._values.append(_mean)
