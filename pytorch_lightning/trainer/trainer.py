@@ -2009,6 +2009,7 @@ class Trainer(
 
     @property
     def lightning_module(self) -> "pl.LightningModule":
+        # TODO: this is actually an optional return
         return self.strategy.lightning_module
 
     @property
