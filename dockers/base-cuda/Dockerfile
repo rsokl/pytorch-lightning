@@ -83,9 +83,9 @@ RUN \
     # Disable cache
     pip config set global.cache-dir false && \
     # set particular PyTorch version
-    python ./requirements/adjust_versions.py requirements.txt ${PYTORCH_VERSION} && \
-    python ./requirements/adjust_versions.py requirements/extra.txt ${PYTORCH_VERSION} && \
-    python ./requirements/adjust_versions.py requirements/examples.txt ${PYTORCH_VERSION} && \
+    python ./requirements/_adjust_versions.py requirements.txt ${PYTORCH_VERSION} && \
+    python ./requirements/_adjust_versions.py requirements/extra.txt ${PYTORCH_VERSION} && \
+    python ./requirements/_adjust_versions.py requirements/examples.txt ${PYTORCH_VERSION} && \
     # Install all requirements
     pip install --user -r requirements/devel.txt --no-cache-dir && \
     rm -rf requirements.* requirements/
