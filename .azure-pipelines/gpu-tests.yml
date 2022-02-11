@@ -15,6 +15,7 @@ trigger:
 pr:
   - "master"
   - "release/*"
+  - "feat/ptracking-manual-opt-step"
 
 jobs:
   - job: pytest
